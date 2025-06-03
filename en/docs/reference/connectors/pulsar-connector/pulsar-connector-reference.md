@@ -1,10 +1,17 @@
 # Apache Pulsar Connector Reference
 
-The following operations allow you to work with the Apache Pulsar Connector. Click an operation name to see parameter details and samples on how to use it.
+This documentation provides a reference guide for the Apache Pulsar Connector. The Pulsar connector allows you to connect to Apache Pulsar, a distributed messaging system, and perform various operations such as sending messages and managing topics.
+Click an operation name to see parameter details and samples on how to use it.
+
+## Connection Configurations
+
+<img src="{{base_path}}/assets/img/integrate/connectors/pulsar/pulsar-conn.png" title="Apache Pulsar Connector Configuration" width="700" alt="Apache Pulsar Connector Configuration"/>
+
+The WSO2 Apache Pulsar Connector allows you to establish both secure and non-secure connections to Apache Pulsar. To configure the connection, use the `<pulsar.init>` element, which must be defined before any other Apache Pulsar operations. This element specifies all required connection parameters, including security settings, depending on your environment's needs.
 
 ---
 
-To use the Apache Pulsar connector, add the <pulsar.init> element in your configuration before any other Apache Pulsar operation. This contains the connection parameters required to connect to Apache Pulsar. This can be with or without security depending on your requirements.
+### Connection Configuration Parameters
 
 ??? note "PULSAR"
     This operation allows you to initialize the connection to Apache Pulsar.
@@ -67,13 +74,13 @@ To use the Apache Pulsar connector, add the <pulsar.init> element in your config
             <td>No</td>
         </tr>
         <tr>
-            <td>initialBackoffIntervalNanos</td>
-            <td>Initial backoff interval for reconnection attempts (in nanoseconds).</td>
+            <td>initialBackoffInterval</td>
+            <td>Initial backoff interval for reconnection attempts (in milliseconds).</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>maxBackoffIntervalNanos</td>
-            <td>Maximum backoff interval for reconnection attempts (in nanoseconds).</td>
+            <td>maxBackoffInterval</td>
+            <td>Maximum backoff interval for reconnection attempts (in milliseconds).</td>
             <td>No</td>
         </tr>
         <tr>
@@ -199,13 +206,13 @@ To use the Apache Pulsar connector, add the <pulsar.init> element in your config
             <td>No</td>
         </tr>
         <tr>
-            <td>initialBackoffIntervalNanos</td>
-            <td>Initial backoff interval for reconnection attempts (in nanoseconds).</td>
+            <td>initialBackoffInterval</td>
+            <td>Initial backoff interval for reconnection attempts (in milliseconds).</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>maxBackoffIntervalNanos</td>
-            <td>Maximum backoff interval for reconnection attempts (in nanoseconds).</td>
+            <td>maxBackoffInterval</td>
+            <td>Maximum backoff interval for reconnection attempts (in milliseconds).</td>
             <td>No</td>
         </tr>
         <tr>
@@ -350,8 +357,8 @@ To use the Apache Pulsar connector, add the <pulsar.init> element in your config
         <numIoThreads>4</numIoThreads>
         <numListenerThreads>2</numListenerThreads>
         <enableBusyWait>true</enableBusyWait>
-        <initialBackoffIntervalNanos>1000000</initialBackoffIntervalNanos>
-        <maxBackoffIntervalNanos>1000000000</maxBackoffIntervalNanos>
+        <initialBackoffInterval>1000</initialBackoffInterval>
+        <maxBackoffInterval>100000</maxBackoffInterval>
         <connectionsPerBroker>1</connectionsPerBroker>
         <concurrentLookupRequest>10</concurrentLookupRequest>
         <maxConcurrentLookupRequests>100</maxConcurrentLookupRequests>
@@ -368,3 +375,157 @@ To use the Apache Pulsar connector, add the <pulsar.init> element in your config
     ```
 
 ---
+
+### Publishing messages to Apache Pulsar
+
+??? note "publishMessages"
+    The publishMessages operation allows you to publish messages to the Apache Pulsar brokers.
+    <table>
+        <tr>
+            <th>Parameter Name</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+        <tr>
+            <td>topicName</td>
+            <td>The name of the Pulsar topic to which messages will be published.</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>compressionType</td>
+            <td>The compression type to use for messages. Supported values: NONE, LZ4, ZLIB, ZSTD, SNAPPY.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>sendMode</td>
+            <td>The mode for sending the message: SYNC (wait for ack) or ASYNC (send and continue).</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>batchingEnabled</td>
+            <td>Whether message batching is enabled for the producer. Batching can improve throughput by sending multiple messages in a single request.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>batchingMaxMessages</td>
+            <td>The maximum number of messages permitted in a batch.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>batchingMaxBytes</td>
+            <td>The maximum size of a batch in bytes.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>batchingMaxPublishDelayMicros</td>
+            <td>The maximum delay in microseconds for batching messages before they are published.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>chunkingEnabled</td>
+            <td>Whether chunking is enabled for large messages. If enabled, large messages are split into smaller chunks.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>chunkMaxMessageSize</td>
+            <td>The maximum size (in bytes) of a single message before it gets chunked.</td>
+            <td>No</td>
+        </tr>   
+        <tr>
+            <th colspan="3">Additional parameters</td>
+        <tr>
+            <td>sendTimeoutMs</td>
+            <td>The timeout in milliseconds for a message to be sent. If the message is not acknowledged within this time, it is marked as failed.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>blockIfQueueFull</td>
+            <td>Whether the producer should block when the outgoing message queue is full. If false, send operations will fail immediately when the queue is full.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>maxPendingMessages</td>
+            <td>The maximum number of messages allowed to be pending in the outgoing queue.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>maxPendingMessagesAcrossPartitions</td>
+            <td>The maximum number of pending messages across all partitions. This is useful for partitioned topics.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>hashingScheme</td>
+            <td>The hashing scheme used to determine the partition for a message. Supported values: JavaStringHash, Murmur3_32Hash, BoostHash.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>messageRoutingMode</td>
+            <td>The message routing mode for partitioned topics. Supported values: SinglePartition, RoundRobinPartition, CustomPartition.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <th colspan="3">Input Parameters</td>
+        <tr>
+            <td>key</td>
+            <td>The key associated with the message for partitioning or routing.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>value</td>
+            <td>The value or payload of the message to be published.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>sequenceId</td>
+            <td>The sequence ID to assign to the message for deduplication or ordering.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>deliverAfter</td>
+            <td>The delay duration after which the message should be delivered (e.g., 5s, 1m).</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>properties</td>
+            <td>Custom properties to attach to the message as key-value pairs.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <th colspan="3">Output Parameters</td>
+        <tr>
+            <td>responseVariable</td>
+            <td>The name of the variable to which the output should be stored.</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>overwriteBody</td>
+            <td>Replace the Message Body in Message Context with the response of the operation.</td>
+            <td>No</td>
+        </tr>
+    </table>
+
+    **Sample configuration**
+
+    ```xml
+    <pulsar.publishMessages configKey="securePulsar">
+        <topicName>cities</topicName>
+        <compressionType>NONE</compressionType>
+        <sendMode>Sync</sendMode>
+        <batchingEnabled>false</batchingEnabled>
+        <key>sampleKey</key>
+        <value>{${payload}}</value>
+        <sequenceId></sequenceId>
+        <properties>[{"compression":"enabled"}, {"type":"json"}]</properties>
+        <responseVariable>pulsar_publishMessages_135</responseVariable>
+        <overwriteBody>false</overwriteBody>
+    </pulsar.publishMessages>
+    ```
+
+    Following properties will be set in the message context or to a new variable if the `overwriteBody` parameter is set to `false`.
+
+    ```
+    {
+        "success": "true"
+        "msgid: "fdfdfd"
+    }
+    ```
