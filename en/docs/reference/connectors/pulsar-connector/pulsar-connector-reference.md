@@ -1,6 +1,6 @@
 # Apache Pulsar Connector Reference
 
-This documentation provides a reference guide for the Apache Pulsar Connector. The Pulsar connector allows you to connect to Apache Pulsar, a distributed messaging system, and perform various operations such as sending messages and managing topics.
+This documentation provides a reference guide for the Apache Pulsar Connector. The Pulsar connector allows you to connect to Apache Pulsar, a distributed messaging system, and perform message publishing.
 Click an operation name to see parameter details and samples on how to use it.
 
 ## Connection Configurations
@@ -145,8 +145,8 @@ The WSO2 Apache Pulsar Connector allows you to establish both secure and non-sec
         </tr>
     </table>
 
-??? note "PULSARSECURE"
-    This operation allows you to initialize a secure and authorized connection to Apache Pulsar.
+??? note "PULSAR SECURE"
+    This operation allows you to initialize a secure and authenticated connection to Apache Pulsar.
     <table>
         <tr>
             <th>Parameter Name</th>
@@ -328,15 +328,15 @@ The WSO2 Apache Pulsar Connector allows you to establish both secure and non-sec
             <td>No</td>
         </tr>
         <tr>
-            <th colspan="3">Parameters for Authorization</td>
+            <th colspan="3">Parameters for Authentication</td>
         <tr>
-            <td>authorizationType</td>
-            <td>Type of authorization (e.g., JWT, TLS, OAUTH2, NONE).</td>
+            <td>authenticationType</td>
+            <td>Type of authentication (e.g., JWT, TLS, OAUTH2, NONE).</td>
             <td>No</td>
         </tr>
         <tr>
             <td>jwtToken</td>
-            <td>JWT token to be used with JWT authorization type.</td>
+            <td>JWT token to be used with JWT authentication type.</td>
             <td>No</td>
         </tr>
     </table>
@@ -378,8 +378,8 @@ The WSO2 Apache Pulsar Connector allows you to establish both secure and non-sec
 
 ### Publishing messages to Apache Pulsar
 
-??? note "publishMessages"
-    The publishMessages operation allows you to publish messages to the Apache Pulsar brokers.
+??? note "Publish Message"
+    The publishMessage operation allows you to publish messages to the Apache Pulsar brokers.
     <table>
         <tr>
             <th>Parameter Name</th>
