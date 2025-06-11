@@ -1,9 +1,14 @@
+# Apache Pulsar Inbound Endpoint Reference
 
-
-
-
+This reference page documents all the configuration parameters supported by the Apache Pulsar Inbound Endpoint. These parameters control how the inbound endpoint connects to the Pulsar server, what topics it subscribes to, the subscription type, message processing modes, and more. Use this table as a guide when configuring your inbound endpoint to ensure seamless and reliable integration with Apache Pulsar.
 
 <table>
+    <tr>
+        <th>Parameter</th>
+        <th>Display Name</th>
+        <th>Description</th>
+        <th>Required</th>
+    </tr>
     <tr>
         <td>topicNames</td>
         <td>Topic(s)</td>
@@ -33,7 +38,7 @@
         <td>Subscription Topics Mode</td>
         <td>
           Determines which types of topics the consumer subscribes to: <code>AllTopics</code> (both persistent and non-persistent), <code>PersistentOnly</code>, or <code>NonPersistentOnly</code>.<br>
-          This parameter is only applicable when using <code>topicsPattern</code>; it has no effect if <code>topicNames</code> is specified.
+          This parameter is required when <code>topicsPattern</code>; is used and has no effect if <code>topicNames</code> is specified.
         </td>
         <td>No</td>
     </tr>

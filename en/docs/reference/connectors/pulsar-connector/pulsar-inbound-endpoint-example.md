@@ -45,5 +45,5 @@ To configure the Apache Pulsar connector with Apache Pulsar version 4.0.4, copy 
 
 4. Fill in the form with the following values:
 
-   * **Name**: SalesforceCDCInboundEP
+   * **Name**: ApachePulsarInboundEP
    * **Injecting Sequence Name**: test
